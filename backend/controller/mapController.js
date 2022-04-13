@@ -4,7 +4,7 @@ const mapMarkerModel = require('../models/mapMarkerModel')
 
 // @desc      GET The map
 // @route     GET /api/map
-// @access    Private.
+// @access    Public.
 const getMap = asyncHandler(async (req, res) => {
   const allMapMarkers = await mapMarkerModel.find()
   res.status(200).json(allMapMarkers)
