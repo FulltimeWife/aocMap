@@ -1,0 +1,29 @@
+{
+  "name": "aocmap",
+  "version": "1.0.0",
+  "description": "Ashes of Creation Alpha 1 Map for the Hand of Unity Guild",
+  "main": "server.js",
+  "scripts": {
+    "start": "node backend/server.js",
+    "server": "nodemon backend/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FulltimeWife/aocMap.git"
+  },
+  "author": "FulltimeWife",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/FulltimeWife/aocMap/issues"
+  },
+  "homepage": "https://github.com/FulltimeWife/aocMap#readme",
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "express-async-handler": "^1.2.0",
+    "mongoose": "^6.2.10"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
