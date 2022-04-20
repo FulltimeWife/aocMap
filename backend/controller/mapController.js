@@ -1,4 +1,5 @@
 const asyncHandler = require('express-async-handler');
+const MapMarker = require("../models/mapMarkerModel");
 
 const mapMarkerModel = require('../models/mapMarkerModel')
 
@@ -18,14 +19,14 @@ const setMapMarker = asyncHandler(async (req, res) => {
     res.status(400)
     throw new Error('Please add a valid text input')
   }
-
-  const mapMarker = await mapMarkerModel.create({
-    markerName: req.body.markerName,
-    xCoordinate: req.body.xCoordinate,
-    yCoordinate: req.body.yCoordinate,
-    zCoordinate: req.body.zCoordinate
+  const mapMarker = new MapMarker({
+    mapMarkerMap: {}
   })
-
+  mapMarker.markerName = req.body.markerName
+  mapMarker.mapMarkerMap.set('x', req.body.coordinates.x)
+  mapMarker.mapMarkerMap.set('y', req.body.coordinates.y)
+  mapMarker.mapMarkerMap.set('z', req.body.coordinates.z)
+  mapMarker.save()
   res.status(200).json(mapMarker)
 })
 
@@ -33,18 +34,20 @@ const setMapMarker = asyncHandler(async (req, res) => {
 // @route     PUT /api/map/:id
 // @access    Private.
 const updateMapMarker = asyncHandler(async (req, res) => {
-  const mapMarker = await mapMarkerModel.findById(req.params.id) 
-
+  const mapMarker = await MapMarker.findById(req.params.id) 
+  console.log(req.body)
   if(!mapMarker) {
     res.status(400)
     throw new Error('Map Marker not found')
   }
 
-  const updatedMapMarker = await mapMarkerModel.findByIdAndUpdate(req.params.id, req.body, 
-    {
-      new: true
-    })
+  const updatedMapMarker = await MapMarker.findByIdAndUpdate(req.params.id, req.body, 
+  {
+    new: true
+  })
+  
   res.status(200).json(updatedMapMarker)
+
 })
 
 
@@ -52,7 +55,8 @@ const updateMapMarker = asyncHandler(async (req, res) => {
 // @route     DELETE /api/map/:id
 // @access    Private.
 const deleteMapMarker = asyncHandler(async (req, res) => {
-  const mapMarker = await mapMarkerModel.findById(req.params.id) 
+
+  const mapMarker = await MapMarker.findById(req.params.id) 
 
   if (!mapMarker) {
     res.status(400)
@@ -61,6 +65,7 @@ const deleteMapMarker = asyncHandler(async (req, res) => {
 
   await mapMarker.remove()
   res.status(200).json({id: req.params.id})
+
 })
 
 module.exports = {

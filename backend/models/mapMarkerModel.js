@@ -1,25 +1,17 @@
-const { Decimal128 } = require("bson");
 const mongoose = require('mongoose');
 
-const mapMarkerSchema = mongoose.Schema({
+const mapMarkerSchema = new mongoose.Schema({
   markerName: {
     type: String,
-    required: [true, 'Please label this marker']
+    required: [true, 'Please provide the name of the Map Marker']
   },
-  xCoordinate: {
-    type: Decimal128,
-    required: [true, 'Please add an X Coordinate']
-  },
-  yCoordinate: {
-    type: Decimal128,
-    required: [true, 'Please add a Y Coordinate']
-  },
-  zCoordinate: {
-    type: Decimal128,
-    required: [true, 'Please add a Z Coordinate']
+  mapMarkerMap: {
+    type: Map,
+    of: Number,
+    required: [true, 'Please provide the coordinates']
   }
-}, {
-  timestamps: true
 })
 
-module.exports = mongoose.model('Map Marker Model', mapMarkerSchema)
+const MapMarker = mongoose.model('mapMarker', mapMarkerSchema);
+
+module.exports = MapMarker
