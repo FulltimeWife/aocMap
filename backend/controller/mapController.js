@@ -35,7 +35,6 @@ const setMapMarker = asyncHandler(async (req, res) => {
 // @access    Private.
 const updateMapMarker = asyncHandler(async (req, res) => {
   const mapMarker = await MapMarker.findById(req.params.id) 
-  console.log(req.body)
   if(!mapMarker) {
     res.status(400)
     throw new Error('Map Marker not found')
