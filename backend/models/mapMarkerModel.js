@@ -12,6 +12,14 @@ const mapMarkerSchema = new mongoose.Schema({
   }
 })
 
+const userSchema = new mongoose.Schema({
+  username: {
+    type: String,
+    required: true,
+  },
+  
+})
+
 const MapMarker = mongoose.model('mapMarker', mapMarkerSchema);
 
 module.exports = MapMarker
