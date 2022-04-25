@@ -9,15 +9,11 @@ const mapMarkerSchema = new mongoose.Schema({
     type: Map,
     of: Number,
     required: [true, 'Please provide the coordinates']
-  }
-})
-
-const userSchema = new mongoose.Schema({
-  username: {
-    type: String,
-    required: true,
   },
-  
+  mapMarkerOwner: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'userTable'
+  }
 })
 
 const MapMarker = mongoose.model('mapMarker', mapMarkerSchema);
