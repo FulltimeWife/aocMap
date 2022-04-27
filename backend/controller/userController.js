@@ -4,9 +4,9 @@ const asyncHandler = require('express-async-handler')
 const userTable = require('../models/userModel')
 
 
-// @desc      Create a User
+// @desc      Create a User...
 // @route     POST /api/users
-// @access    Public
+// @access    Public.
 const createUser = asyncHandler(async (req, res) => {
   //Check that everything is filled out in its enterity
   const { username, password, role} = req.body
