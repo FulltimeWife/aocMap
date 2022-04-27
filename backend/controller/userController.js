@@ -15,7 +15,7 @@ const createUser = asyncHandler(async (req, res) => {
     throw new Error('Please fill out all of the required fields')
   }
 
-  //Check if the username is already taken
+  //Check if the username is already taken, I agree
 
   const checkUser = await userTable.findOne({username})
 
