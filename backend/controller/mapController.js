@@ -2,6 +2,9 @@ const asyncHandler = require('express-async-handler');
 const MapMarker = require("../models/mapMarkerModel");
 
 const mapMarkerModel = require('../models/mapMarkerModel')
+const userTable = require('../models/userModel')
+
+const userRoles = require('../constants/userConstants')
 
 // @desc      GET The map
 // @route     GET /api/map
@@ -9,6 +12,11 @@ const mapMarkerModel = require('../models/mapMarkerModel')
 const getMap = asyncHandler(async (req, res) => {
   const allMapMarkers = await mapMarkerModel.find()
   res.status(200).json(allMapMarkers)
+})
+
+const getMarkerByUser = asyncHandler(async(req, res) => {
+  const usersMapMarker = await mapMarkerModel.find({ mapMarkerOwner: req.user.id })
+  res.status(200).json(usersMapMarker)
 })
 
 // @desc      SET a map marker
@@ -20,7 +28,8 @@ const setMapMarker = asyncHandler(async (req, res) => {
     throw new Error('Please add a valid text input')
   }
   const mapMarker = new MapMarker({
-    mapMarkerMap: {}
+    mapMarkerMap: {},
+    mapMarkerOwner: req.user.id
   })
   mapMarker.markerName = req.body.markerName
   mapMarker.mapMarkerMap.set('x', req.body.coordinates.x)
@@ -40,8 +49,31 @@ const updateMapMarker = asyncHandler(async (req, res) => {
     throw new Error('Map Marker not found')
   }
 
+  //Define the user as the one making the request 
+  const user = await userTable.findById(req.user.id)
+
+  //If user does not exist, throw an error
+  if(!user) {
+    res.status(401)
+    throw new Error('User is not found')
+  }
+
+  if(user.role === userRoles.ADMIN) {
+    const updatedMapMarker = await MapMarker.findByIdAndUpdate(req.params.id, req.body, 
+      {
+        mapMarkerMap: req.body.coordinates,
+        new: true
+      })
+      //If the person making the request is NOT equal to the one who owns the map marker, throw an error
+  } 
+  else if(mapMarker.mapMarkerOwner.toString() !== user.id) {
+    res.status(401)
+    throw new Error('This is not your map marker')
+  }
+
   const updatedMapMarker = await MapMarker.findByIdAndUpdate(req.params.id, req.body, 
   {
+    mapMarkerMap: req.body.coordinates,
     new: true
   })
   
@@ -62,13 +94,30 @@ const deleteMapMarker = asyncHandler(async (req, res) => {
     throw new Error ('Map Marker not found')
   }
 
+  //Define the user as the one making the request 
+  const user = await userTable.findById(req.user.id)
+
+  //If user does not exist, throw an error
+  if(!user) {
+    res.status(401)
+    throw new Error('User is not found')
+  }
+
+  if(user.role === userRoles.ADMIN) {
+    await mapMarker.remove()
+  } 
+   //If the person making the request is NOT equal to the one who owns the map marker, throw an error
+  else if (mapMarker.mapMarkerOwner.toString() !== user.id) {
+    res.status(401)
+    throw new Error('This is not your map marker')
+  }  
   await mapMarker.remove()
   res.status(200).json({id: req.params.id})
-
 })
 
 module.exports = {
   getMap,
+  getMarkerByUser,
   setMapMarker,
   updateMapMarker,
   deleteMapMarker,

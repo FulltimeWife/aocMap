@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import './App.css';
 import { useCanvas } from "./hooks/useCanvas";
 import HoUMap from './HoUMap.jpg'
@@ -20,9 +20,6 @@ const App = () => {
 
   return ( 
     <main className="app-main">
-      <div className="clear-button">
-        <button onClick={handleClearCanvas}>Clear Screen</button>
-      </div>
       <canvas 
         className="app-canvas"
         ref={canvasRef}
@@ -31,6 +28,9 @@ const App = () => {
         style={{ backgroundImage: `url(${HoUMap})`}}
         onClick={handleCanvasClick}
          />
+         <div className="clear-button">
+        <button onClick={handleClearCanvas}>Clear Screen</button>
+      </div>
     </main>
   )
 }
