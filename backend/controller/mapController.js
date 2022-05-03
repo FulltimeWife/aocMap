@@ -28,13 +28,14 @@ const setMapMarker = asyncHandler(async (req, res) => {
     throw new Error('Please add a valid text input')
   }
   const mapMarker = new MapMarker({
-    mapMarkerMap: {},
+    coordinates: {},
     mapMarkerOwner: req.user.id
   })
   mapMarker.markerName = req.body.markerName
-  mapMarker.mapMarkerMap.set('x', req.body.coordinates.x)
-  mapMarker.mapMarkerMap.set('y', req.body.coordinates.y)
-  mapMarker.mapMarkerMap.set('z', req.body.coordinates.z)
+  mapMarker.coordinates.set('x', req.body.coordinates.x)
+  mapMarker.coordinates.set('y', req.body.coordinates.y)
+  mapMarker.coordinates.set('z', req.body.coordinates.z)
+  mapMarker.type = req.body.type
   mapMarker.save()
   res.status(200).json(mapMarker)
 })
@@ -61,7 +62,7 @@ const updateMapMarker = asyncHandler(async (req, res) => {
   if(user.role === userRoles.ADMIN) {
     const updatedMapMarker = await MapMarker.findByIdAndUpdate(req.params.id, req.body, 
       {
-        mapMarkerMap: req.body.coordinates,
+        coordinates: req.body.coordinates,
         new: true
       })
       //If the person making the request is NOT equal to the one who owns the map marker, throw an error
@@ -73,7 +74,7 @@ const updateMapMarker = asyncHandler(async (req, res) => {
 
   const updatedMapMarker = await MapMarker.findByIdAndUpdate(req.params.id, req.body, 
   {
-    mapMarkerMap: req.body.coordinates,
+    coordinates: req.body.coordinates,
     new: true
   })
   

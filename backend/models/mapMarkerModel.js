@@ -5,7 +5,7 @@ const mapMarkerSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Please provide the name of the Map Marker']
   },
-  mapMarkerMap: {
+  coordinates: {
     type: Map,
     of: Number,
     required: [true, 'Please provide the coordinates']
@@ -13,6 +13,11 @@ const mapMarkerSchema = new mongoose.Schema({
   mapMarkerOwner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'userTable'
+  },
+  type: {
+    type: Number,
+    enum: [0, 1, 2],
+    default: 0
   }
 })
 
