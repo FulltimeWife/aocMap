@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-import HoUMap from '../HoUMap.jpg'
 
 const heartSVG = "M0 200 v-200 h200 a100,100 90 0,1 0,200 a100,100 90 0,1 -200,0 z"
 const SVG_PATH = new Path2D(heartSVG);
@@ -15,11 +14,9 @@ export function draw (ctx, location) {
   ctx.shadowBlur = 15;
   ctx.save();
   ctx.scale(canvasScale, canvasScale);
-  ctx.translate(location.x / canvasScale - canvasOffset + 90, location.y / canvasScale + canvasOffset + 90);
+  ctx.translate(location.x / canvasScale - 4500, location.y / canvasScale - 1000);
   ctx.rotate(255 * Math.PI / 200);
   ctx.fill(SVG_PATH)
-  console.log(`X coordinate: ${location.x / canvasScale - canvasOffset}`)
-  console.log(`Y coordinate: ${location.y / canvasScale - canvasOffset}`)
   ctx.restore();
 };
 
