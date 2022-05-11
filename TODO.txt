@@ -1,1 +1,11 @@
-discord oauth2 integration
+Backend: 
+  Markers:
+  Users:
+  Zones:
+
+Frontend: 
+  Pages:
+    Map:
+      - Dynamically render it based on the zone ID
+  Markers:
+    - Dynamically render markers based on the zone ID

@@ -19,6 +19,10 @@ const getMarkerByUser = asyncHandler(async(req, res) => {
   res.status(200).json(usersMapMarker)
 })
 
+const getMarkerByZone = asyncHandler(async(req, res) => {
+  const zoneMapMarkers = await(mapMarkerModel.find({ mapMarkerZone: req.body.id}))
+})
+
 // @desc      SET a map marker
 // @route     SET /api/map
 // @access    Private.
@@ -32,6 +36,7 @@ const setMapMarker = asyncHandler(async (req, res) => {
     mapMarkerOwner: req.user.id
   })
   mapMarker.markerName = req.body.markerName
+  mapMarker.mapMarkerZone = req.body.mapMarkerZone
   mapMarker.coordinates.set('x', req.body.coordinates.x)
   mapMarker.coordinates.set('y', req.body.coordinates.y)
   mapMarker.coordinates.set('z', req.body.coordinates.z)
@@ -119,6 +124,7 @@ const deleteMapMarker = asyncHandler(async (req, res) => {
 module.exports = {
   getMap,
   getMarkerByUser,
+  getMarkerByZone,
   setMapMarker,
   updateMapMarker,
   deleteMapMarker,

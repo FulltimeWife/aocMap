@@ -5,12 +5,17 @@ const {
   getMarkerByUser,
   setMapMarker,
   updateMapMarker,
-  deleteMapMarker
+  deleteMapMarker,
+  getMarkerByZone
 } = require('../controller/mapController')
+const {
+  createZone
+} = require('../controller/zoneController')
 const {protectToken} = require('../middleware/authMiddleware')
 
 router.route('/').get(getMap).post(protectToken, setMapMarker)
 router.route('/owner').get(protectToken, getMarkerByUser)
-router.route('/:id').delete(protectToken, deleteMapMarker).put(protectToken, updateMapMarker)
+router.route('/:id').get(getMarkerByZone).delete(protectToken, deleteMapMarker).put(protectToken, updateMapMarker)
+router.route('/zone/').post(protectToken, createZone)
 
 module.exports = router;
