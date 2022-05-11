@@ -9,3 +9,6 @@ Frontend:
       - Dynamically render it based on the zone ID
   Markers:
     - Dynamically render markers based on the zone ID
+  Images:
+    mapTiles:
+      - Some sort of CDN rather than local storage
