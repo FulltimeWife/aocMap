@@ -9,6 +9,10 @@ const zoneSchema = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'userTable'
   },
+  zoneType: {
+    type: Number,
+    enum: [0, 1, 2, 3, 4, 5]
+  }
 })
 
 module.exports = mongoose.model('zoneTable', zoneSchema)

@@ -15,7 +15,7 @@ function MarkerData({ markerInfo }) {
     <Marker
       position={[markerInfo.coordinates.y, markerInfo.coordinates.x]}
       key={markerInfo._id}
-      icon={getIcon(markerInfo, 30)}>
+      icon={getIcon(markerInfo)}>
       <MarkerPopUpData markerInfo={markerInfo} markerType={markerInfo.type} />
     </Marker>
   )

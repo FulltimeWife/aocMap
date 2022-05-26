@@ -12,7 +12,7 @@ function MarkerPopUpData({markerInfo}) {
       Y: {markerInfo.coordinates.y} <br />
       ID: {markerInfo._id} <br />
       Type: {markerInfo.type} <br />
-      <Link to ='/'>
+      <Link to ={`/map/${markerInfo.mapMarkerOwner}`}>
         <button type="button" className="btn"><FaHouseUser /> Go to the town of {markerInfo.markerName}</button>
       </Link>
     </Popup>

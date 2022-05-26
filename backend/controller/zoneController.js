@@ -1,9 +1,8 @@
 const asyncHandler = require('express-async-handler');
 const zoneTable = require('../models/zoneModel')
 
-
-// @desc      Create a User
-// @route     POST /zone
+// @desc      Create a Zone
+// @route     POST /map/zone
 // @access    Private
 const createZone = asyncHandler(async (req, res) => {
   const {zoneName} = req.body
@@ -20,13 +19,15 @@ const createZone = asyncHandler(async (req, res) => {
 
   const newZone = await zoneTable.create({
     zoneName,
-    zoneOwner: req.user.id
+    zoneOwner: req.user.id,
+    zoneType: req.body.zoneType
   })
   
   if(newZone) {
     res.status(201).json({
       _id: newZone.id,
-      zoneName: newZone.zoneName
+      zoneName: newZone.zoneName,
+      zoneType: req.body.zoneType
     })
   } else {
     res.status(400)
@@ -35,5 +36,5 @@ const createZone = asyncHandler(async (req, res) => {
 })
 
 module.exports = {
-  createZone
+  createZone,
 }

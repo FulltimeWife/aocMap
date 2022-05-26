@@ -8,8 +8,6 @@ function getIcon() {
     })
 }
 
-
-
 function Town() {
   return (
     <div className="large">

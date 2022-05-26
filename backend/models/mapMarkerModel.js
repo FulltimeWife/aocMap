@@ -18,6 +18,10 @@ const mapMarkerSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'zoneTable'
   },
+  mapMarkerSubZone: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'zoneTable'
+  },
   type: {
     type: Number,
     enum: [0, 1, 2, 3, 4, 5, 6],

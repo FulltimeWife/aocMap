@@ -21,6 +21,7 @@ const getMarkerByUser = asyncHandler(async(req, res) => {
 
 const getMarkerByZone = asyncHandler(async(req, res) => {
   const zoneMapMarkers = await(mapMarkerModel.find({ mapMarkerZone: req.body.id}))
+  res.status(200).json(zoneMapMarkers)
 })
 
 // @desc      SET a map marker
@@ -37,6 +38,7 @@ const setMapMarker = asyncHandler(async (req, res) => {
   })
   mapMarker.markerName = req.body.markerName
   mapMarker.mapMarkerZone = req.body.mapMarkerZone
+  mapMarker.mapMarkerSubZone = req.body.mapMarkerSubZone
   mapMarker.coordinates.set('x', req.body.coordinates.x)
   mapMarker.coordinates.set('y', req.body.coordinates.y)
   mapMarker.coordinates.set('z', req.body.coordinates.z)
